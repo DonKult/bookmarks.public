@@ -9,6 +9,22 @@
 <script type="text/javascript">
 <!--
 $(function() {
+    /**
+     * Browsers support a multitude of different favicon formats and while
+     * there is a default location, they can be placed anywhere and as we
+     * can't really guess, you have to setup a collection of favicons yourself
+     * with the hostname as the filename in the 'ico' filetype; e.g. for
+     * 'http://www.debian.org/distrib' the favicon file would need to be
+     * called 'www.debian.org.ico' and placed in the URI specified with this
+     * variable (local server or use file://).
+     *
+     * The search engine DuckDuckGo has a small collection at 'https://icons.duckduckgo.com/i/'
+     * for display in their result page which could be used to get you going
+     * with your collection, but be fair and don't steal them the bandwidth.
+     * Their collection is also not very large, so really roll your own!
+     */
+    var faviconBaseURI = '';
+
 
     /**
      * Show the number of visible bookmarks in the titlebar.
@@ -31,7 +47,20 @@ $(function() {
         listitems.sort(function(a, b) {
             return $(a).text().toUpperCase().localeCompare($(b).text().toUpperCase());
         });
-        $.each(listitems, function(idx, itm) { mylist.append(itm); });
+
+        var regexHostname = new RegExp('^(?:f|ht)tp(?:s)?\://([^/]+)', 'im');
+        $.each(listitems, function(idx, itm) {
+            mylist.append(itm);
+
+            // add favicon in front of the bookmark link
+            if (typeof faviconBaseURI !== 'string' || faviconBaseURI.length === 0 ||
+                typeof itm.firstChild === 'undefined' || typeof itm.firstChild.href !== 'string')
+                return;
+            var favicon = document.createElement("img");
+            favicon.setAttribute('src', faviconBaseURI + itm.firstChild.href.match(regexHostname)[1].toString() + '.ico');
+            favicon.setAttribute('class', 'favicon');
+            itm.insertBefore(favicon, itm.firstChild);
+        });
     }
 
 
@@ -217,6 +246,17 @@ td {
 #bookmarks > li {
   padding: 0.2em;
   border-bottom: 1px dashed silver;
+}
+.favicon {
+  margin-left: -21px;
+  margin-right: 5px;
+  width: 16px;
+  vertical-align: middle;
+  /* strangely, if its a http:// image which doesn't exist it will still
+     use up the requested 16 pixel while if its (not existent) on file://
+     it will not use up any pixels. With this handy flag we get it to do it -
+     and as a bonus, it will not even display the broken image… consistency! */
+  -moz-force-broken-image-icon: 1;
 }
 </style>
  </head>
