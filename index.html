@@ -73,11 +73,8 @@ $(function() {
         keys.sort();
         for ( t in keys )
         {
-            $("#autotags").append( "<a class=\"tagfilter\" href=\"#" + escape(keys[t]) + "\">" + keys[t] + "</a>, ");
+            $("#autotags").append( "<li><a class=\"tagfilter\" href=\"#" + escape(keys[t]) + "\">" + keys[t] + "</a></li>");
         }
-
-        /** Remove trailng ", ". */
-        $("#autotags").html( $("#autotags").html().replace( /, $/, '.' ) );
     }
 
 
@@ -90,17 +87,14 @@ $(function() {
             var tag = $(this).attr("title");
             if ( typeof tag !== 'undefined' )
             {
-                var txt = '<ul>';
+                var txt = '<ul class="taglist">';
                 var array = tag.toLowerCase().split( "," );
                 for ( i in array )
                 {
                     var nm = array[i];
                     nm = nm.replace(/(^\s+|\s+$)/g,'');
-                    txt += "<a class=\"tagfilter\" href=\"#\">" + nm + "</a>, ";
+                    txt += "<li><a class=\"tagfilter\" href=\"#\">" + nm + "</a></li>";
                 }
-
-                /** Remove trailing ", ". */
-                txt = txt.replace( /, $/, "." );
                 $(this).append( txt + "</ul>" );
             }
         });
@@ -194,8 +188,20 @@ h2 {
   text-decoration: none;
   font-family: monospace;
 }
-#bookmarks {
+#bookmarks, #autotags, .taglist {
   list-style: none;
+}
+ul#autotags {
+  padding-left: 0px;
+}
+ul#autotags > li, ul.taglist > li {
+  display: inline;
+}
+ul#autotags > li + li:before, ul.taglist > li + li:before {
+  content: ", ";
+}
+ul#autotags > li:last-child:after, ul.taglist > li:last-child:after {
+  content: ".";
 }
 table {
   width: 100%;
@@ -205,7 +211,7 @@ td {
   padding: 0.5em;
   border: 1px solid silver;
 }
-li {
+#bookmarks > li {
   padding: 0.2em;
   border-bottom: 1px dashed silver;
 }
@@ -245,7 +251,7 @@ li {
       </td>
       <td id="tags" valign="top">
         <h2>Tags</h2>
-        <p id="autotags"></p>
+        <ul id="autotags"></ul>
         <p>&nbsp;</p>
         <h2>Untagged</h2>
         <p>View <a href="#untagged" id="untagged">untagged</a>.</p>
