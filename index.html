@@ -92,11 +92,8 @@
                 $("#autotags").html("");
                 for (t in cleanKeys)
                 {
-                    $("#autotags").append("<a class=\"tagfilter\" href=\"#" + escape(cleanKeys[t]) + "\">" + cleanKeys[t] + "</a>, ");
+                    $("#autotags").append("<li><a class=\"tagfilter\" href=\"#" + escape(cleanKeys[t]) + "\">" + cleanKeys[t] + "</a></li>");
                 }
-
-                /** Remove trailing ", ". */
-                $("#autotags").html($("#autotags").html().replace(/, $/, '.'));
             }
 
             function toggleTags() {
@@ -122,18 +119,15 @@
              *  @param tag      the list of tags to add to the entry
              */
             function decorate(entry, tag) {
-                var txt = '\n<ul><li>';
+                var txt = '<ul class="taglist">';
                 var array = tag.toLowerCase().split(",");
                 for (var i in array)
                 {
                     var nm = array[i];
                     nm = nm.replace(/(^\s+|\s+$)/g, '');
-                    txt += "<a class=\"tagfilter\" href=\"#" + escape(nm) + "\">" + nm + "</a>, ";
+                                 txt += "<li><a class=\"tagfilter\" href=\"#" + escape(nm) + "\">" + nm + "</a></li>";
                 }
-
-                /** Remove trailing ", ". */
-                txt = txt.replace(/, $/, ".");
-                entry.append(txt + "</li></ul>");
+                entry.append(txt + "</ul>");
             }
 
 
@@ -169,14 +163,7 @@
              */
             function hideTags()
             {
-                $("#bookmarks").children().each(function () {
-                    var tag = $(this).attr("title");
-                    if (typeof tag !== 'undefined')
-                    {
-                        var tagsStripped = $(this).html().replace(/<ul><li>.*<\/li><\/ul>/, "\n");
-                        $(this).html(tagsStripped);
-                    }
-                });
+                $(".taglist").remove();
             }
 
             $(function () {
@@ -277,8 +264,20 @@
                 text-decoration: none;
                 font-family: monospace;
             }
-            #bookmarks {
+            #bookmarks, #autotags, .taglist {
                 list-style: none;
+            }
+            ul#autotags {
+                padding-left: 0px;
+            }
+            ul#autotags > li, ul.taglist > li {
+                display: inline;
+            }
+            ul#autotags > li + li:before, ul.taglist > li + li:before {
+                content: ", ";
+            }
+            ul#autotags > li:last-child:after, ul.taglist > li:last-child:after {
+                content: ".";
             }
             table {
                 width: 100%;
@@ -318,8 +317,8 @@
                 <td id="tags" valign="top">
                     <fieldset>
                         <legend><b>Tags</b></legend>
-                        <p id="autotags">
-                        </p>
+                        <ul id="autotags">
+                        </ul>
                         <p> 
                             <a title="Show untagged bookmarks" href="#untagged" id="untagged">untagged</a>
                         </p>
