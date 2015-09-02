@@ -180,9 +180,11 @@
                 {
                     var mylist = $('#bookmarks');
                     var listitems = mylist.children('li').get();
-                    listitems.sort(function (a, b) {
-                        return $(a).text().toUpperCase().localeCompare($(b).text().toUpperCase());
-                    });
+                    if (mylist.hasClass('sort')) {
+                        listitems.sort(function (a, b) {
+                            return $(a).text().toUpperCase().localeCompare($(b).text().toUpperCase());
+                        });
+                    }
 
                     $.each(listitems, function (idx, itm) {
                         mylist.append(itm);
@@ -328,7 +330,7 @@
         <table>
             <tr>
                 <td rowspan="1" valign="top">
-                    <ul class="bookmarks" id="bookmarks">
+                    <ul class="bookmarks sort" id="bookmarks">
                         <!-- THE BOOKMARKS -->
                         <li title="debian, planet"><a href="http://planet.debian.org/">Planet Debian</a></li>
                         <li title="debian, development"><a href="http://www.debian.org/devel/">Debian Developers' Corner</a></li>
