@@ -168,6 +168,22 @@
 
             $(function () {
                 /**
+                 * Browsers support a multitude of different favicon formats and while
+                 * there is a default location, they can be placed anywhere and as we
+                 * can't really guess, you have to setup a collection of favicons yourself
+                 * with the hostname as the filename in the 'ico' filetype; e.g. for
+                 * 'http://www.debian.org/distrib' the favicon file would need to be
+                 * called 'www.debian.org.ico' and placed in the URI specified with this
+                 * variable (local server or use file://).
+                 *
+                 * The search engine DuckDuckGo has a small collection at 'https://icons.duckduckgo.com/i/'
+                 * for display in their result page which could be used to get you going
+                 * with your collection, but be fair and don't steal them the bandwidth.
+                 * Their collection is also not very large, so really roll your own!
+                 */
+                var faviconBaseURI = '';
+
+                /**
                  * Sort the items in the UL which contains our bookmarks.
                  */
                 function sortBookmarks()
@@ -177,8 +193,22 @@
                     listitems.sort(function (a, b) {
                         return $(a).text().toUpperCase().localeCompare($(b).text().toUpperCase());
                     });
+
                     $.each(listitems, function (idx, itm) {
                         mylist.append(itm);
+                    });
+
+                    // add favicon in front of the bookmark link
+                    if (typeof faviconBaseURI !== 'string' || faviconBaseURI.length === 0)
+                        return;
+                    var regexHostname = new RegExp('^(?:f|ht)tp(?:s)?\://([^/]+)', 'im');
+                    $.each(listitems, function(idx, itm) {
+                        if (typeof itm.firstChild === 'undefined' || typeof itm.firstChild.href !== 'string')
+                            return;
+                        var favicon = document.createElement("img");
+                        favicon.setAttribute('src', faviconBaseURI + itm.firstChild.href.match(regexHostname)[1].toString() + '.ico');
+                        favicon.setAttribute('class', 'favicon');
+                        itm.insertBefore(favicon, itm.firstChild);
                     });
                 }
 
@@ -286,6 +316,12 @@
             td {
                 padding: 0.5em;
                 border: 1px solid silver;
+            }
+            .favicon {
+                margin-left: -21px;
+                margin-right: 5px;
+                width: 16px;
+                vertical-align: middle;
             }
         </style>
     </head>
