@@ -250,6 +250,7 @@ $(function () {
         }
         updateTitle();
     };
+    window.onhashchange();
 
     /**
      * Search by title/url - case insensitive.
