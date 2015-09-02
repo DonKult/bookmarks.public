@@ -223,6 +223,9 @@
                 /** Populate the tags pane. */
                 populateTags();
 
+                if ($('#TagsCheck').is(':checked'))
+                    toggleTags();
+
                 // Focus on the search/filter box.
                 $("#fill").focus();
 
