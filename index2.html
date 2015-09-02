@@ -1,0 +1,130 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML Basic 1.1//EN"
+    "http://www.w3.org/TR/xhtml-basic/xhtml-basic11.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+    <head>
+        <meta charset="utf-8" />
+        <title>My Bookmarks</title>
+        <script type="text/javascript" src="http://code.jquery.com/jquery-2.1.1.min.js"></script>
+        <script type="text/javascript" src="bookmarks.public.js"></script>
+        <style type="text/css">
+            fieldset > legend {
+                font-weight: bold;
+            }
+            fieldset {
+                margin-bottom: 1em;
+            }
+            main {
+                float: left;
+                border: 1px solid silver;
+                width: calc(100% - 300px);
+                margin-top: 0.5em;
+            }
+            aside {
+                width: 300px;
+                position: fixed;
+                right: 0;
+            }
+            label:after {
+                content: ":";
+            }
+            #fs-search input {
+                width: 100%;
+            }
+            #fs-new label {
+                float: left;
+                width: 60px;
+                clear:both;
+            }
+            #fs-new input {
+                width: calc(100% - 70px);
+                float: right;
+                margin-bottom: 1em;
+            }
+            .tagfilter {
+                text-decoration: none;
+                font-family: monospace;
+            }
+            #bookmarks, #autotags, .taglist, #tagsnav {
+                list-style: none;
+            }
+            ul#autotags {
+                padding-left: 0px;
+            }
+            ul#autotags > li, ul.taglist > li {
+                display: inline;
+            }
+            ul#autotags > li + li:before, ul.taglist > li + li:before {
+                content: ", ";
+            }
+            .favicon {
+                margin-left: -21px;
+                margin-right: 5px;
+                width: 16px;
+                vertical-align: middle;
+            }
+            .filter-unmatched, .search-unmatched {
+                display: none;
+            }
+            #bookmarks > li {
+                  padding: 0.2em;
+                  margin-right: 2em;
+                  border-bottom: 1px dashed silver;
+            }
+            a {
+                  color: blue;
+                        text-decoration: none;
+            }
+            .taglist a {
+                  color: grey;
+            }
+        </style>
+    </head>
+    <body>
+        <main role="main">
+            <ul class="bookmarks sort" id="bookmarks" data-favicon-baseuri="">
+                <!-- THE BOOKMARKS -->
+                <li title="debian, planet"><a href="http://planet.debian.org/">Planet Debian</a></li>
+                <li title="debian, development"><a href="http://www.debian.org/devel/">Debian Developers' Corner</a></li>
+                <li title="sysadmin, planet"><a href="http://planetsysadmin.com/">Planet Sysadmin</a></li>
+                <li title="sysadmin, reddit"><a href="http://www.reddit.com/r/sysadmin">Reddit: /r/sysadmin</a></li>
+                <li title="blog, microsoft"><a href="http://blogs.msdn.com/b/oldnewthing/">The old new thing</a></li>
+                <li title="blog, personal"><a href="http://blog.steve.org.uk/">Steve Kemp's blog</a></li>
+                <li title="development, personal"><a href="https://github.com/skx/">Steve Kemp's github account</a></li>
+                <li title="news"><a href="https://news.ycombinator.com/">Hacker News</a></li>
+                <li title="news, edinburgh"><a href="http://www.scotsman.com/edinburgh-evening-news">Edinburgh Evening News</a></li>
+                <li title="pippo pelo, NEws"><a href="http://www.bbc.co.uk/news/">BBC News</a></li>
+                <li title="personal"><a href="http://start.steve.org.uk/">My start page</a></li>
+                <li title="personal, sysadmin, debian"><a href="http://debian-administration.org/">Debian Administration</a></li>
+                <li title="sysadmin, stackexchange"><a href="http://serverfault.com/">Server Fault</a></li>
+                <li title="photography, stackexchange"><a href="http://photo.stackexchange.com/">Photography Exchange</a></li>
+                <li title="reddit, photography"><a href="http://www.reddit.com/r/photography/">Reddit /r/photography</a></li>
+                <li><a href="http://www.thepondleith.co.uk/">The Pond, Leith</a></li>
+                <!-- THE END OF BOOKMARKS -->
+            </ul>
+        </main>
+        <aside>
+            <fieldset id="fs-tags">
+                <legend>Tags</legend>
+                <ul id="autotags"></ul>
+                <ul id="tagsnav">
+                    <li><a title="Show untagged bookmarks" href="#untagged">untagged</a></li>
+                    <li><input type="checkbox" name="TagsCheck" id="TagsCheck" value="ShowTags" onclick="toggleTags()" checked="checked" />Show Tags</li>
+                    <li><a title="Show all bookmarks" href="#">Show All</a></li>
+                </ul>
+            </fieldset>
+            <fieldset id="fs-search">
+                <legend>Filter Bookmarks</legend>
+                <label for="fill">Search within bookmarks</label><input type="text" name="fill" id="fill" value="" />
+            </fieldset>
+            <fieldset id="fs-new">
+                <legend>Add Bookmark</legend>
+                <form id="newForm" name="newForm">
+                    <label for="newName">Name</label><input type="text" name="newname" id="newName" value="" />
+                    <label for="newLink">Link</label><input type="text" name="newLink" id="newLink" value="" />
+                    <label for="newTags">Tags</label><input type="text" name="newTags" id="newTags" value="" />
+                    <button type="button" onclick="addBookmark()">Add</button>
+                </form>
+            </fieldset>
+        </aside>
+    </body>
+</html>
