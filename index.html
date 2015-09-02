@@ -196,7 +196,16 @@
                         if (typeof itm.firstChild === 'undefined' || typeof itm.firstChild.href !== 'string')
                             return;
                         var favicon = document.createElement("img");
-                        favicon.setAttribute('src', faviconBaseURI + itm.firstChild.href.match(regexHostname)[1].toString() + '.ico');
+                        // errors in the host extraction are indicating wrong URLs
+                        var hostname = itm.firstChild.href.match(regexHostname);
+                        if (typeof hostname === 'undefined' || hostname === null || hostname.length <= 1)
+                        {
+                            // FIXME: Firefox/Iceweasel specific URI
+                            favicon.setAttribute('src', 'chrome://global/skin/icons/warning-16.png');
+                            favicon.setAttribute('style', 'background-color: red');
+                        }
+                        else
+                            favicon.setAttribute('src', faviconBaseURI + hostname[1].toString() + '.ico');
                         favicon.setAttribute('class', 'favicon');
                         itm.insertBefore(favicon, itm.firstChild);
                     });
