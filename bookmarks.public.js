@@ -1,21 +1,3 @@
-/**
- * Show all bookmarks
- */
-function clearFilter() {
-    $("#bookmarks").children().removeClass('filter-unmatched');
-    updateTitle();
-}
-
-/**
- * Show the number of visible bookmarks in the titlebar.
- */
-function updateTitle()
-{
-    var count = $("#bookmarks").children().filter(":visible").size();
-    var plural = ((count === 0) || (count > 1)) ? 's' : '';
-    document.title = count + " visible bookmark" + plural;
-}
-
 function addBookmark() {
     var name = $("#newName").val();
     var link = $("#newLink").val();
@@ -220,6 +202,16 @@ $(function () {
     $("#fill").focus();
 
     /**
+     * Show the number of visible bookmarks in the titlebar.
+     */
+    function updateTitle()
+    {
+        var count = $("#bookmarks").children().filter(":visible").size();
+        var plural = ((count === 0) || (count > 1)) ? 's' : '';
+        document.title = count + " visible bookmark" + plural;
+    }
+
+    /**
      * Bind event handlers...
      */
     /**
@@ -229,7 +221,8 @@ $(function () {
     window.onhashchange = function () {
         if (typeof window.location.hash !== 'string' || window.location.hash.length === 0)
         {
-            clearFilter();
+            $("#bookmarks").children().removeClass('filter-unmatched');
+            updateTitle();
             return;
         }
 
