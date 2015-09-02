@@ -11,9 +11,7 @@
              * Show all bookmarks
              */
             function clearFilter() {
-                $("#bookmarks").children().each(function () {
-                    $(this).show();
-                });
+                $("#bookmarks").children().removeClass('filter-unmatched');
                 updateTitle();
             }
 
@@ -246,13 +244,15 @@
                     if (tag === "untagged") {
                         $("#bookmarks").children().each(function () {
                             var tags = $(this).attr('title');
-                            (typeof tags !== 'undefined') ? $(this).hide() : $(this).show();
+                            (typeof tags === 'undefined')
+                                ? $(this).removeClass('filter-unmatched') : $(this).addClass('filter-unmatched');
                         });
                     } else {
                         $("#bookmarks").children().each(function () {
                             var tags = $(this).attr('title');
+                            // decodeURIComponent needed to handle special chars in tags
                             ((typeof tags !== 'undefined') && (tags.toLowerCase().match(decodeURIComponent(tag))))
-                                ? $(this).show() : $(this).hide();  // decodeURIComponent needed to handle special chars in tags
+                                ? $(this).removeClass('filter-unmatched') : $(this).addClass('filter-unmatched');
                         });
                     }
                     updateTitle();
@@ -272,7 +272,7 @@
                             links = links.attr("href").toLowerCase();
                         }
                         (title.match(filter) || links.match(filter) || filter === "")
-                                ? $(this).show() : $(this).hide();
+                                ? $(this).removeClass('search-unmatched') : $(this).addClass('search-unmatched');
                     });
                     updateTitle();
                 });
@@ -318,6 +318,9 @@
                 margin-right: 5px;
                 width: 16px;
                 vertical-align: middle;
+            }
+            .filter-unmatched, .search-unmatched {
+                display: none;
             }
         </style>
     </head>
