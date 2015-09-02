@@ -243,11 +243,18 @@
                     }
 
                     var tag = window.location.hash.substring(1);
-                    $("#bookmarks").children().each(function () {
-                        var tags = $(this).attr('title');
-                        ((typeof tags !== 'undefined') && (tags.toLowerCase().match(decodeURIComponent(tag))))
+                    if (tag === "untagged") {
+                        $("#bookmarks").children().each(function () {
+                            var tags = $(this).attr('title');
+                            (typeof tags !== 'undefined') ? $(this).hide() : $(this).show();
+                        });
+                    } else {
+                        $("#bookmarks").children().each(function () {
+                            var tags = $(this).attr('title');
+                            ((typeof tags !== 'undefined') && (tags.toLowerCase().match(decodeURIComponent(tag))))
                                 ? $(this).show() : $(this).hide();  // decodeURIComponent needed to handle special chars in tags
-                    });
+                        });
+                    }
                     updateTitle();
                 };
 
@@ -266,19 +273,6 @@
                         }
                         (title.match(filter) || links.match(filter) || filter === "")
                                 ? $(this).show() : $(this).hide();
-                    });
-                    updateTitle();
-                });
-
-
-                /**
-                 * Show only entries with zero tags.
-                 */
-                $('#untagged').click(function (event) {
-                    event.preventDefault();
-                    $("#bookmarks").children().each(function () {
-                        var tags = $(this).attr('title');
-                        (typeof tags !== 'undefined') ? $(this).hide() : $(this).show();
                     });
                     updateTitle();
                 });
@@ -358,7 +352,7 @@
                         <ul id="autotags">
                         </ul>
                         <p> 
-                            <a title="Show untagged bookmarks" href="#untagged" id="untagged">untagged</a>
+                            <a title="Show untagged bookmarks" href="#untagged">untagged</a>
                         </p>
                         <p> 
                             <input type="checkbox" name="TagsCheck" id="TagsCheck" value="ShowTags" onclick="toggleTags()"/>Show Tags
