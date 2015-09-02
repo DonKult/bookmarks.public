@@ -157,22 +157,6 @@
 
             $(function () {
                 /**
-                 * Browsers support a multitude of different favicon formats and while
-                 * there is a default location, they can be placed anywhere and as we
-                 * can't really guess, you have to setup a collection of favicons yourself
-                 * with the hostname as the filename in the 'ico' filetype; e.g. for
-                 * 'http://www.debian.org/distrib' the favicon file would need to be
-                 * called 'www.debian.org.ico' and placed in the URI specified with this
-                 * variable (local server or use file://).
-                 *
-                 * The search engine DuckDuckGo has a small collection at 'https://icons.duckduckgo.com/i/'
-                 * for display in their result page which could be used to get you going
-                 * with your collection, but be fair and don't steal them the bandwidth.
-                 * Their collection is also not very large, so really roll your own!
-                 */
-                var faviconBaseURI = '';
-
-                /**
                  * Sort the items in the UL which contains our bookmarks.
                  */
                 function sortBookmarks()
@@ -189,7 +173,22 @@
                         mylist.append(itm);
                     });
 
-                    // add favicon in front of the bookmark link
+                    /**
+                     * Browsers support a multitude of different favicon formats and while
+                     * there is a default location, they can be placed anywhere and as we
+                     * can't really guess, you have to setup a collection of favicons yourself
+                     * with the hostname as the filename in the 'ico' filetype; e.g. for
+                     * 'http://www.debian.org/distrib' the favicon file would need to be
+                     * called 'www.debian.org.ico' and placed in the URI specified with
+                     * with the data-favicon-baseuri attribute on the #bookmarks element
+                     * (URI should realistically be a local server or file:///path/to/).
+                     *
+                     * The search engine DuckDuckGo has a small collection at 'https://icons.duckduckgo.com/i/'
+                     * for display in their result page which could be used to get you going
+                     * with your collection, but be fair and don't steal them the bandwidth.
+                     * Their collection is also not very large, so really roll your own!
+                     */
+                    var faviconBaseURI = mylist[0].getAttribute('data-favicon-baseuri');
                     if (typeof faviconBaseURI !== 'string' || faviconBaseURI.length === 0)
                         return;
                     var regexHostname = new RegExp('^(?:f|ht)tp(?:s)?\://([^/]+)', 'im');
@@ -331,7 +330,7 @@
         <table>
             <tr>
                 <td rowspan="1" valign="top">
-                    <ul class="bookmarks sort" id="bookmarks">
+                    <ul class="bookmarks sort" id="bookmarks" data-favicon-baseuri="">
                         <!-- THE BOOKMARKS -->
                         <li title="debian, planet"><a href="http://planet.debian.org/">Planet Debian</a></li>
                         <li title="debian, development"><a href="http://www.debian.org/devel/">Debian Developers' Corner</a></li>
