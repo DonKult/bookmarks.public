@@ -1,54 +1,37 @@
-bookmarks.public
-================
+# bookmarks.public
 
-This repository contains the single HTML file `index.html`.
+Simple HTML page spiced up with JavaScript to collect and manage your bookmarks
+independent of your specific browser.
 
-The bookmarks file is a template which is designed to be edited by the user,
-replacing the bookmarks in the single unordered-list with their own.
-
-The bookmarks file contains some simple javascript which should allow simple
-navigtation and interactive use of the bookmarks, when opened via a browser.
+This repository is a non-converging fork of [Steve Kemps original version](https://github.com/skx/bookmarks.public)
+with various changes and patches.
 
 
-Online Demo
------------
+# Features
 
-You may [try out the interface](http://www.steve.org.uk/Software/bookmarks/bookmarks.public/) as the sample page contains a small number of (tagged) bookmarks.
-
-
-Rationale
----------
-
-I didn't like any of the online bookmark-syncing plugins/addins/tools I tested.
-
-The idea of hosting an online bookmark server is appealing, but using the
-power of Git it seems that having a local bookmark file should be pretty robust:
-
- * New items are added, generally one per line.
- * Existing items can be edited to add new tags.
- * Merges should be painless.
-
-The included javascript magic is present solely to make the bookmarks manageable,
-in my private copy I have 400+ bookmarks and with the tagging support present here
-they will continue to work for me easily.
+* split out JavaScript into an extra file for simpler updates
+* more semantic markup for tags (which is also better to style individually)
+* support showing a favicon from a pre-built collection
+* make sorting of bookmarks and tags toggling run conditionally on startup via markup
+* handle #untagged and no-selected tag via hashchange as well
+* search in the tag-filtered list
 
 
-Using
------
+# Rationale
 
-If you wish to use this bookmarks script, and are happy for your bookmarks
-to be public, then just fork [this repository](https://github.com/skx/bookmarks.public) and you're done.
+I don't like online (bookmark) services and the built-in facilities of my
+preferred browser doesn't suit my needs either.
 
-If you prefer to keep your bookmarks private, as I do, then you'll need to
-clone the repository somewhere private.
+Steve Kemps presented a solution to this with [bookmarks.public](https://github.com/skx/bookmarks.public),
+which is basically just a HTML file with some JavaScript magic embedded that
+can be easily managed and synced via git.
+
+# Adding bookmarks via shellscripts
+
+	sed -i "/<!-- THE END OF BOOKMARKS -->/ i \
+		<li${TAGS}><a href=\"${URL}\">${TITLE}</a></li>" "$FILE"
 
 
-Contributing
-------------
+# non-converging?
 
-If you wish to submit improvements to the javascript code, or layout, then I welcome forks & pull requests.
-
-(If you submit a change feel free to add a link to your homepage/blog/whatever as part of that.  The sample bookmarks are only samples.)
-
-Steve
---
+Compare [this](https://github.com/DonKult/bookmarks.public/commit/dd9faa58477a6b71d2eb384153c3b13a5ee8b89a) and [this](https://github.com/DonKult/bookmarks.public/commit/1010544acc9b37fbd4f1f0c6869bffc13c31058d) commit and figure it out on your own.
