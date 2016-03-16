@@ -1,29 +1,3 @@
-function addBookmark() {
-    var name = $("#newName").val();
-    var link = $("#newLink").val();
-    var tags = $("#newTags").val();
-    var current = document.getElementById("bookmarks").innerHTML;
-    var entry = '<li id="newOne" title="' + tags + '"><a href="' + link + '">' + name + '</a></li>';
-    current = current + entry;
-    document.getElementById("bookmarks").innerHTML = current;
-    populateTags();
-    // Append tag to the newly added bookmark
-    $("#bookmarks").children().each(function () {
-        var id = $(this).attr("id");
-        var tag = $(this).attr("title");
-        if (id === "newOne")
-        {
-            var checkbox = document.getElementById("TagsCheck");
-            if (checkbox.checked === true) {
-                decorate($(this), tag);
-            }
-            $(this).removeAttr("id");
-        }
-    });
-    var form = document.getElementById("newForm");
-    form.reset();
-}
-
 /**
  * This function collects each distinct tag,
  * stripping whitespace, and placing into sorted order.

@@ -31,16 +31,6 @@
             #fs-search input {
                 width: 100%;
             }
-            #fs-new label {
-                float: left;
-                width: 60px;
-                clear:both;
-            }
-            #fs-new input {
-                width: calc(100% - 70px);
-                float: right;
-                margin-bottom: 1em;
-            }
             .tagfilter {
                 text-decoration: none;
                 font-family: monospace;
@@ -116,15 +106,6 @@
             <fieldset id="fs-search">
                 <legend>Filter Bookmarks</legend>
                 <label for="fill">Search within bookmarks</label><input type="text" name="fill" id="fill" value="" />
-            </fieldset>
-            <fieldset id="fs-new">
-                <legend>Add Bookmark</legend>
-                <form id="newForm" name="newForm">
-                    <label for="newName">Name</label><input type="text" name="newname" id="newName" value="" />
-                    <label for="newLink">Link</label><input type="text" name="newLink" id="newLink" value="" />
-                    <label for="newTags">Tags</label><input type="text" name="newTags" id="newTags" value="" />
-                    <button type="button" onclick="addBookmark()">Add</button>
-                </form>
             </fieldset>
         </aside>
     </body>
