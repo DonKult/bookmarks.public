@@ -15,6 +15,7 @@ with various changes and patches.
 * make sorting of bookmarks and tags toggling run conditionally on startup via markup
 * handle #untagged and no-selected tag via hashchange as well
 * search in the tag-filtered list
+* VanillaJS requiring just recent browsers instead of an external JQuery
 
 
 # Rationale
@@ -25,6 +26,7 @@ preferred browser doesn't suit my needs either.
 Steve Kemps presented a solution to this with [bookmarks.public](https://github.com/skx/bookmarks.public),
 which is basically just a HTML file with some JavaScript magic embedded that
 can be easily managed and synced via git.
+
 
 # Adding bookmarks via shellscripts
 
